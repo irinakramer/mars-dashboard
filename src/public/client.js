@@ -2,6 +2,8 @@ let store = {
     user: { name: "Student" },
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
+    selectedRover: '',
+    roverData: ''
 }
 
 // add our markup to the page
@@ -72,7 +74,7 @@ const ImageOfTheDay = (apod) => {
     console.log(photodate.getDate(), today.getDate());
 
     console.log(photodate.getDate() === today.getDate());
-    if (!apod || apod.date === today.getDate() ) {
+    if (!apod || apod.date === today.getDate()) {
         getImageOfTheDay(store)
     }
 
@@ -93,6 +95,17 @@ const ImageOfTheDay = (apod) => {
 
 // ------------------------------------------------------  API CALLS
 
+const getRoverData = (store, name) => {
+    fetch(`http://localhost:3000/rovers/${name}`)
+        .then(res => res.json())
+        .then((roverData) => {
+            console.log(roverData)
+            updateStore(store, { roverData })
+        })
+        .catch(err => console.log(err))
+}
+getRoverData(store, 'curiosity');
+
 // Example API call
 const getImageOfTheDay = (state) => {
     let { apod } = state
@@ -100,6 +113,6 @@ const getImageOfTheDay = (state) => {
     fetch(`http://localhost:3000/apod`)
         .then(res => res.json())
         .then(apod => updateStore(store, { apod }))
-
-    return data
+    // console.log(data);
+    // return data
 }
