@@ -26,7 +26,9 @@ const App = (state) => {
     return `
         <header></header>
         <main>
+        <section>${Cards(store.rovers)}</section>
             ${Greeting(store.user.name)}
+            
             <section>
                 <h3>Put things on the page!</h3>
                 <p>Here is an example section.</p>
@@ -51,6 +53,28 @@ window.addEventListener('load', () => {
 })
 
 // ------------------------------------------------------  COMPONENTS
+
+// Display rovers
+const Cards = (rovers) => {
+    if (rovers) {
+        return `
+            <div class="tabs">
+                ${rovers.map(rover => Card(rover)).join('')}
+            </div>
+        `
+    } else {
+        return `No rovers to display`
+    }
+}
+
+const Card = (rover) => {
+    return `
+    <div class="card">
+        <a href="${rover}">${rover}</a>
+    </div>
+    `
+}
+
 
 // Pure function that renders conditional information -- THIS IS JUST AN EXAMPLE, you can delete it.
 const Greeting = (name) => {
@@ -104,7 +128,7 @@ const getRoverData = (store, name) => {
         })
         .catch(err => console.log(err))
 }
-getRoverData(store, 'curiosity');
+getRoverData(store, 'spirit');
 
 // Example API call
 const getImageOfTheDay = (state) => {
