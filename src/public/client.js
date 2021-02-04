@@ -1,6 +1,6 @@
 let store = {
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-    selectedRover: '',
+    selectedRover: 'Curiosity',
     roverData: ''
 }
 
@@ -44,6 +44,41 @@ const Rover = (state) => {
         ${WrapperDiv(state, 'rovers', MapJoin, state.rovers, CardMaker)}
         `
     }
+
+    // TODO - if undefined data, run getRoverData again
+    if (!state.roverData) {
+        getRoverData(state)
+    }
+
+    // Photos from rover
+    let photos;
+    if (state.selectedRover === 'Curiosity') {
+        photos = state.roverData.data.latest_photos;
+        console.log(photos);
+    } else {
+        photos = state.roverData.data.photos
+    }
+
+    // Ger URLs of the photos
+    const photoUrl = photos.map(photo => photo.img_src);
+
+    // Get photo date (all from same date, so take index 0)
+    const photoDate = photos[0].earth_date;
+
+    // Get rover manifest data ( all from same photo, so take index 0)
+    const { name, landing_date, launch_date, status } = photos[0].rover;
+
+    return `
+    <ul>
+    <li>${name}</li>
+    <li>${launch_date}</li>
+    <li>${landing_date}</li>
+    <li>${status}</li>
+    <li>${photoDate}</li>
+    </ul>
+    ${WrapperDiv(state, 'photo-wrapper', MapJoin, photoUrl, ImgMaker)}
+    
+    `
 
 }
 
@@ -92,4 +127,3 @@ const getRoverData = (state) => {
         })
         .catch(err => console.log(err))
 }
-//getRoverData(store);
