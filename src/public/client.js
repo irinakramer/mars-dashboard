@@ -70,8 +70,8 @@ const Manifest = (state) => {
 
 // ------------------------------------------------------  API CALLS
 
-const getRoverData = (store, name) => {
-    fetch(`http://localhost:3000/rovers/${name}`)
+const getRoverData = (store) => {
+    fetch(`http://localhost:3000/curiosity`)
         .then(res => res.json())
         .then((roverData) => {
             console.log(roverData)
@@ -79,4 +79,4 @@ const getRoverData = (store, name) => {
         })
         .catch(err => console.log(err))
 }
-getRoverData(store, 'spirit');
+getRoverData(store);
