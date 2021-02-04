@@ -23,7 +23,7 @@ const App = (state) => {
     return `
         <header></header>
         <main>
-        <section>${Cards(store.rovers)}</section>
+        <section>${Rover(state)}</section>
         </main>
         <footer></footer>
     `
@@ -36,47 +36,60 @@ window.addEventListener('load', () => {
 
 // ------------------------------------------------------  COMPONENTS
 
-// Display rovers
-const Cards = (rovers) => {
-    if (rovers) {
+// Main component to display all info
+const Rover = (state) => {
+    // Build 3 rovers container
+    if (!state.selectedRover) {
         return `
-            <div class="tabs">
-                ${rovers.map(rover => Card(rover)).join('')}
-            </div>
+        ${WrapperDiv(state, 'rovers', MapJoin, state.rovers, CardMaker)}
         `
-    } else {
-        return `No rovers to display`
     }
+
 }
 
-const Card = (rover) => {
+
+// Creates div wrapper for the 3 rovers and for all the rover photos
+const WrapperDiv = (state, className, mapJoiner, arr, elMaker) => {
+    return (`
+    <div class="${className}">
+    ${mapJoiner(state, arr, elMaker)}
+    </div>
+    `)
+}
+
+// Joins mapped array to avoid commas
+const MapJoin = (state, arr, elMaker) => {
+    return (`
+    ${arr.map(x => elMaker(state, x)).join('')}
+    `)
+}
+
+// Make a card for a rover
+const CardMaker = (state, rover) => {
     return `
     <div class="card">
-        <a href="${rover}">${rover}</a>
+        <a href="tbd" onclick="setTimeout(updateStore, 3000, {selectedRover: '${rover}'})">${rover}</a>
     </div>
     `
 }
 
-// Rover manifest data
-const Manifest = (state) => {
-    const { name, launch_date, landing_date, status } = photos[0].rover;
+// Make an image tag for a photo URL
+const ImgMaker = (state, url) => {
     return `
-    Rover Name: ${name},
-    Launch Date: ${launch_date}
-    
+    <img src="${url}" alt="photo taken by ${state.selectedRover}" class="photo" />
     `
 }
 
 
 // ------------------------------------------------------  API CALLS
-
-const getRoverData = (store) => {
+// TODO - replace curiosity with {selectedRover}
+const getRoverData = (state) => {
     fetch(`http://localhost:3000/curiosity`)
         .then(res => res.json())
         .then((roverData) => {
             console.log(roverData)
-            updateStore(store, { roverData })
+            updateStore(state, { roverData })
         })
         .catch(err => console.log(err))
 }
-getRoverData(store);
+//getRoverData(store);
