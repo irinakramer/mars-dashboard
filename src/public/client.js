@@ -8,7 +8,8 @@ let store = {
 const root = document.getElementById('root')
 
 const updateStore = (store, newState) => {
-    store = Object.assign(store, newState)
+    store = Object.assign(store, newState);
+    console.log(store);
     render(root, store)
 }
 
@@ -34,9 +35,6 @@ window.addEventListener('load', () => {
     render(root, store)
 })
 
-// ------------------------------------------------------  EVENT LISTENERS
-// TODO
-
 // ------------------------------------------------------  COMPONENTS
 
 // Main component to display all Rover info
@@ -44,7 +42,7 @@ const Rover = (state) => {
     // Build 3 rovers container
     if (!state.selectedRover) {
         return `
-        ${WrapperDiv(state, 'rovers', MapJoin, state.rovers, CardMaker)}
+            ${WrapperDiv(state, 'rovers', MapJoin, state.rovers, CardMaker)}
         `
     }
 
@@ -60,17 +58,15 @@ const Rover = (state) => {
     const photoUrl = photos.map(photo => photo.img_src);
 
     return `
-    ${Manifest(state)}
-    ${BackButton()}
-    ${WrapperDiv(state, 'photo-wrapper', MapJoin, photoUrl, ImgMaker)}
+        ${Manifest(state)}
+        ${BackButton()}
+        ${WrapperDiv(state, 'photo-wrapper', MapJoin, photoUrl, ImgMaker)}
     `
 }
 
-
-
 const BackButton = () => {
     return `
-    <button id="back-btn"">Back</button>
+        <button id="back-btn" onclick="updateStore(store, {selectedRover: '', roverData: ''})">Back</button>
     `
 }
 
@@ -80,13 +76,13 @@ const Manifest = (state) => {
     const photos = Photos(state);
     const { name, landing_date, launch_date, status } = photos[0].rover;
     return `
-    <ul>
-    <li>${name}</li>
-    <li>${launch_date}</li>
-    <li>${landing_date}</li>
-    <li>${status}</li>
-    <li>${photos[0].earth_date}</li>
-    </ul>
+        <ul>
+            <li>${name}</li>
+            <li>${launch_date}</li>
+            <li>${landing_date}</li>
+            <li>${status}</li>
+            <li>${photos[0].earth_date}</li>
+        </ul>
     `
 }
 
@@ -96,10 +92,10 @@ const Photos = (state) => {
     let photos;
     if (state.selectedRover === 'Curiosity') {
         photos = state.roverData.data.latest_photos;
-        console.log("Curiosity photos:", photos);
+        //console.log("Curiosity photos:", photos);
     } else {
         photos = state.roverData.data.photos;
-        console.log("photos:", photos);
+        //console.log("photos:", photos);
     }
     return photos;
 }
@@ -109,7 +105,7 @@ const Photos = (state) => {
 const WrapperDiv = (state, className, mapJoiner, arr, elMaker) => {
     return (`
     <div class="${className}">
-    ${mapJoiner(state, arr, elMaker)}
+        ${mapJoiner(state, arr, elMaker)}
     </div>
     `)
 }
@@ -117,24 +113,23 @@ const WrapperDiv = (state, className, mapJoiner, arr, elMaker) => {
 // Joins mapped array to avoid commas
 const MapJoin = (state, arr, elMaker) => {
     return (`
-    ${arr.map(x => elMaker(state, x)).join('')}
+        ${arr.map(x => elMaker(state, x)).join('')}
     `)
 }
 
 // Make a card for a rover
 const CardMaker = (state, rover) => {
-    // TODO - move onclick to event listener
     return `
-    <div class="card">
-    <button onclick="setTimeout(updateStore, 3000, {selectedRover: '${rover}'})">${rover}</button>
-    </div>
+        <div class="card">
+            <button id="card-${rover}" onclick="updateStore(store, {selectedRover: '${rover}'})">${rover}</button>
+        </div>
     `
 }
 
 // Make an image tag for a photo URL
 const ImgMaker = (state, url) => {
     return `
-    <img src="${url}" alt="photo taken by ${state.selectedRover}" class="photo" />
+        <img src="${url}" alt="photo taken by ${state.selectedRover}" class="photo" />
     `
 }
 
@@ -145,7 +140,7 @@ const getRoverData = (state) => {
     fetch(`http://localhost:3000/${selectedRover}`)
         .then(res => res.json())
         .then((roverData) => {
-            console.log("roverData:", roverData)
+            //console.log("roverData:", roverData)
             updateStore(state, { roverData })
         })
         .catch(err => console.log(err))
