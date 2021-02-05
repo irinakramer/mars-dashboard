@@ -34,9 +34,12 @@ window.addEventListener('load', () => {
     render(root, store)
 })
 
+// ------------------------------------------------------  EVENT LISTENERS
+// TODO
+
 // ------------------------------------------------------  COMPONENTS
 
-// Main component to display all info
+// Main component to display all Rover info
 const Rover = (state) => {
     // Build 3 rovers container
     if (!state.selectedRover) {
@@ -51,7 +54,45 @@ const Rover = (state) => {
         return ''
     }
 
-    // Photos from rover
+    let photos = Photos(state);
+
+    // Ger URLs of the photos
+    const photoUrl = photos.map(photo => photo.img_src);
+
+    return `
+    ${Manifest(state)}
+    ${BackButton()}
+    ${WrapperDiv(state, 'photo-wrapper', MapJoin, photoUrl, ImgMaker)}
+    `
+}
+
+
+
+const BackButton = () => {
+    return `
+    <button id="back-btn"">Back</button>
+    `
+}
+
+// Manifest for mission data
+const Manifest = (state) => {
+    // Get rover manifest data ( all from same photo, so take index 0)
+    const photos = Photos(state);
+    const { name, landing_date, launch_date, status } = photos[0].rover;
+    return `
+    <ul>
+    <li>${name}</li>
+    <li>${launch_date}</li>
+    <li>${landing_date}</li>
+    <li>${status}</li>
+    <li>${photos[0].earth_date}</li>
+    </ul>
+    `
+}
+
+
+// Photos array
+const Photos = (state) => {
     let photos;
     if (state.selectedRover === 'Curiosity') {
         photos = state.roverData.data.latest_photos;
@@ -60,27 +101,7 @@ const Rover = (state) => {
         photos = state.roverData.data.photos;
         console.log("photos:", photos);
     }
-
-    // Ger URLs of the photos
-    const photoUrl = photos.map(photo => photo.img_src);
-
-    // Get photo date (all from same date, so take index 0)
-    const photoDate = photos[0].earth_date;
-
-    // Get rover manifest data ( all from same photo, so take index 0)
-    const { name, landing_date, launch_date, status } = photos[0].rover;
-
-    return `
-    <ul>
-    <li>${name}</li>
-    <li>${launch_date}</li>
-    <li>${landing_date}</li>
-    <li>${status}</li>
-    <li>${photoDate}</li>
-    </ul>
-    ${WrapperDiv(state, 'photo-wrapper', MapJoin, photoUrl, ImgMaker)}
-
-    `
+    return photos;
 }
 
 
@@ -102,6 +123,7 @@ const MapJoin = (state, arr, elMaker) => {
 
 // Make a card for a rover
 const CardMaker = (state, rover) => {
+    // TODO - move onclick to event listener
     return `
     <div class="card">
     <button onclick="setTimeout(updateStore, 3000, {selectedRover: '${rover}'})">${rover}</button>
