@@ -1,6 +1,6 @@
 let store = {
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-    selectedRover: 'Curiosity',
+    selectedRover: '',
     roverData: ''
 }
 
@@ -45,18 +45,20 @@ const Rover = (state) => {
         `
     }
 
-    // TODO - if undefined data, run getRoverData again
+    // if undefined data, run getRoverData again and return
     if (!state.roverData) {
         getRoverData(state)
+        return ''
     }
 
     // Photos from rover
     let photos;
     if (state.selectedRover === 'Curiosity') {
         photos = state.roverData.data.latest_photos;
-        console.log(photos);
+        console.log("Curiosity photos:", photos);
     } else {
-        photos = state.roverData.data.photos
+        photos = state.roverData.data.photos;
+        console.log("photos:", photos);
     }
 
     // Ger URLs of the photos
@@ -77,9 +79,8 @@ const Rover = (state) => {
     <li>${photoDate}</li>
     </ul>
     ${WrapperDiv(state, 'photo-wrapper', MapJoin, photoUrl, ImgMaker)}
-    
-    `
 
+    `
 }
 
 
@@ -103,7 +104,7 @@ const MapJoin = (state, arr, elMaker) => {
 const CardMaker = (state, rover) => {
     return `
     <div class="card">
-        <a href="tbd" onclick="setTimeout(updateStore, 3000, {selectedRover: '${rover}'})">${rover}</a>
+    <button onclick="setTimeout(updateStore, 3000, {selectedRover: '${rover}'})">${rover}</button>
     </div>
     `
 }
@@ -117,12 +118,12 @@ const ImgMaker = (state, url) => {
 
 
 // ------------------------------------------------------  API CALLS
-// TODO - replace curiosity with {selectedRover}
 const getRoverData = (state) => {
-    fetch(`http://localhost:3000/curiosity`)
+    const { selectedRover } = state;
+    fetch(`http://localhost:3000/${selectedRover}`)
         .then(res => res.json())
         .then((roverData) => {
-            console.log(roverData)
+            console.log("roverData:", roverData)
             updateStore(state, { roverData })
         })
         .catch(err => console.log(err))
