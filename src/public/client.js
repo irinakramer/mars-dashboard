@@ -1,5 +1,7 @@
-let store = {
-    rovers: ['Curiosity', 'Opportunity', 'Spirit'],
+//const { isImmutable } = require("immutable");
+
+const store = {
+    rovers: Immutable.List(['Curiosity', 'Opportunity', 'Spirit']),
     selectedRover: '',
     roverData: ''
 }
@@ -9,6 +11,7 @@ const root = document.getElementById('root')
 
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState);
+    //store.merge(newState);
     console.log(store);
     render(root, store)
 }
@@ -140,7 +143,7 @@ const getRoverData = (state) => {
     fetch(`http://localhost:3000/${selectedRover}`)
         .then(res => res.json())
         .then((roverData) => {
-            //console.log("roverData:", roverData)
+            console.log("roverData:", roverData)
             updateStore(state, { roverData })
         })
         .catch(err => console.log(err))
