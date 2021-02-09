@@ -18,6 +18,7 @@ app.get('/:name', async (req, res) => {
     const name = req.params.name.toLowerCase();
     let date;
     let url;
+    // Use 'photos' API with set dates for Opportunity and Spirit, use 'latest_photos' for Curiosity
     if (name === 'opportunity') {
         date = '2014-07-13'
         url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${name}/photos?earth_date=${date}&api_key=${process.env.API_KEY}`
@@ -35,7 +36,7 @@ app.get('/:name', async (req, res) => {
         const data = await fetch(url)
             .then(res => res.json())
         res.send({ data })
-        console.log(data)
+        // console.log(data)
     } catch (err) {
         console.log('error:', err);
     }
