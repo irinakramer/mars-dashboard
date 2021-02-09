@@ -25,7 +25,7 @@ const render = async (root, state) => {
 const App = (state) => {
 
     return `
-        <header><h1>Mars Rovers Dashboard</h1></header>
+        <header><h1>Mars Dashboard</h1></header>
         <main>
         <section>${Rover(state)}</section>
         </main>
@@ -69,22 +69,22 @@ const Rover = (state) => {
 
 const BackButton = () => {
     return `
-        <button id="back-btn" onclick="updateStore(store, {selectedRover: '', roverData: ''})">Back</button>
+        <button class="back-btn" onclick="updateStore(store, {selectedRover: '', roverData: ''})">Back</button>
     `
 }
 
 // Manifest for mission data
 const Manifest = (state) => {
-    // Get rover manifest data ( all from same photo, so take index 0)
+    // Get rover manifest data ( all data from same photo, so take index 0)
     const photos = Photos(state);
     const { name, landing_date, launch_date, status } = photos[0].rover;
     return `
         <ul>
-            <li>${name}</li>
-            <li>${launch_date}</li>
-            <li>${landing_date}</li>
-            <li>${status}</li>
-            <li>${photos[0].earth_date}</li>
+            <li>Rover name: ${name}</li>
+            <li>Launch date: ${launch_date}</li>
+            <li>Landing date: ${landing_date}</li>
+            <li>Status: ${status}</li>
+            <li>Photos taken on date: ${photos[0].earth_date}</li>
         </ul>
     `
 }

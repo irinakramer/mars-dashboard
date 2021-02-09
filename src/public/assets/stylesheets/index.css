@@ -11,20 +11,20 @@ body {
   background-repeat: repeat;
 }
 
-header {
-  /* header styles */
-}
 h1 {
   text-align: center;
+  margin: 0.5rem 0 1rem;
 }
 
 main {
   flex: 1;
 }
+
 #root {
   width: 100%;
   max-width: 1224px;
   margin: 0 auto;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -36,6 +36,7 @@ main {
   justify-content: center;
   width: 100%;
 }
+
 .card {
   width: 100%;
   max-width: 300px;
@@ -69,6 +70,22 @@ main {
     -o-transform: scale(1.2);
     transform: scale(1.2);
 }
+.card-btn::before {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background-color: #111827;
+  transition: opacity 0.8s;
+}
+.card:hover .card-btn::before,
+.card:focus .card-btn::before {
+  opacity: 50%;
+  transition: opacity 0.5s;
+}
 .card-btn > span {
   position: absolute;
   top: 0;
@@ -76,9 +93,22 @@ main {
   left: 0;
   right: 0;
   margin: auto;
-  font-size: 1.2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.4rem;
   height: 50px;
   color: #F9FAFB;
+}
+
+.back-btn {
+  padding: 5px 30px;
+    border-radius: 5px;
+    border: 0;
+    margin: 1rem 0;
+    cursor: pointer;
+    background-color: #B45309;
+}
+.back-btn:hover{
+    background-color: #D97706;
 }
 
 footer {
@@ -88,15 +118,22 @@ footer {
 
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
   .card {
-    max-width: 600px;
-    height: 337px;
+    max-width: 500px;
+    height: 281px;
   }
 }
 
 /* -------------------  DESKTOP  -------------------- */
 
 @media (min-width: 1224px) {
+  h1 {
+    font-size: 3rem;
+    margin: 1rem 0 2rem;
+  }
   .rovers {
     flex-direction: row;
     justify-content: space-between;
@@ -119,3 +156,4 @@ footer {
     height: 337px;
   }
 }
+/* Color palette used: Tailwind CSS https://tailwindcss.com/docs/customizing-colors */
