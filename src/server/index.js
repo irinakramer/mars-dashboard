@@ -36,7 +36,6 @@ app.get('/:name', async (req, res) => {
         const data = await fetch(url)
             .then(res => res.json())
         res.send({ data })
-        // console.log(data)
     } catch (err) {
         console.log('error:', err);
     }

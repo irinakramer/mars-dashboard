@@ -10,7 +10,6 @@ const root = document.getElementById('root')
 
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState);
-    console.log(store);
     render(root, store)
 }
 
@@ -94,7 +93,7 @@ const Manifest = (state) => {
             <li>Rover name: ${name}</li>
             <li>Launch date: ${launch_date}</li>
             <li>Landing date: ${landing_date}</li>
-            <li>Status: ${status}</li>
+            <li>Mission status: ${status}</li>
             <li>Photos taken on date: ${photos[0].earth_date}</li>
         </ul>
     `
@@ -185,7 +184,6 @@ const getRoverData = (state) => {
     fetch(`http://localhost:3000/${selectedRover}`)
         .then(res => res.json())
         .then((roverData) => {
-            console.log("roverData:", roverData)
             updateStore(state, { roverData })
         })
         .catch(err => console.log(err))
