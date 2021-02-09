@@ -1,6 +1,7 @@
 # Mars Rover Dashboard
 
 **Functional Programming with Javascript**
+
 Project 2 from the Udacity Intermediate JavaScript Nanodegree program. 
 
 ## Description
@@ -33,9 +34,12 @@ On the homepage select which rover's information you want to view. On the next p
 
 ## Demo
 Homepage:
+
 ![Mars rover dashboard - homepage](/src/public/assets/images/screenshot_home.png?raw=true "Mars rover dashboard - homepage")
 
+
 Rover page:
+
 ![Mars rover dashboard - rover page](/src/public/assets/images/screenshot_rover.png?raw=true "Mars rover dashboard - rover page")
 
 
