@@ -1,38 +1,121 @@
+@import "resets.css";
+
 /* -------------------  MOBILE  --------------------- */
 
 body {
-  display: flex;
-  flex-direction: column;
   font-family: Arial;
-  min-height: 100vh;
+  font-size: 16px;
+  color: #F9FAFB;
+  background-color: #111827;
+  background-image: url(../../assets/images/background.jpg);
+  background-repeat: repeat;
 }
 
 header {
   /* header styles */
 }
+h1 {
+  text-align: center;
+}
 
 main {
   flex: 1;
-  padding: 20px;
+}
+#root {
+  width: 100%;
+  max-width: 1224px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.rovers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.card {
+  width: 100%;
+  max-width: 300px;
+  height: 169px;
+  align-self: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.card-btn {
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 1rem 1rem 2rem rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 1rem;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -o-transition: all .5s;
+  transition: all .5s;
+}
+.card:hover .card-btn,
+.card:focus .card-btn {
+  -ms-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
+.card-btn > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 1.2rem;
+  height: 50px;
+  color: #F9FAFB;
 }
 
 footer {
-  /* footer styles */
+  font-size: 0.8rem;
+  text-align: center;
 }
 
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
-  /* use mobile */
+  .card {
+    max-width: 600px;
+    height: 337px;
+  }
 }
 
 /* -------------------  DESKTOP  -------------------- */
 
 @media (min-width: 1224px) {
-  /* use mobile */
+  .rovers {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .card {
+    max-width: 400px;
+    height: 225px;
+    margin-right: 2rem;
+  }
+  .card:last-of-type {
+    margin-right: 0;
+  }
 }
 
 /* -------------------  LARGE SCREENS  -------------- */
 
 @media (min-width: 1824px) {
-  /* use mobile */
+  .card {
+    max-width: 600px;
+    height: 337px;
+  }
 }

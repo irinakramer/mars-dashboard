@@ -25,11 +25,11 @@ const render = async (root, state) => {
 const App = (state) => {
 
     return `
-        <header></header>
+        <header><h1>Mars Rovers Dashboard</h1></header>
         <main>
         <section>${Rover(state)}</section>
         </main>
-        <footer></footer>
+        <footer>Project by Irina Kramer<br>Udacity Intermediate JavaScript nanodegree</footer>
     `
 }
 
@@ -124,7 +124,7 @@ const MapJoin = (state, arr, elMaker) => {
 const CardMaker = (state, rover) => {
     return `
         <div class="card">
-            <button id="card-${rover}" onclick="updateStore(store, {selectedRover: '${rover}'})">${rover}</button>
+            <button class="card-btn" id="card-${rover}" onclick="updateStore(store, {selectedRover: '${rover}'})" style="background-image: url('assets/images/${rover}_rover.jpg')"><span>${rover}</span></button>
         </div>
     `
 }
